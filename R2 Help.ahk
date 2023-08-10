@@ -621,15 +621,19 @@ CameraRange:
 {
 	GuiControlGet, CameraRange
 	if (CameraRange < 200){
-		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_fov, "UInt", 4, "UInt", 0x04, "UInt *", 0)
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_1, "UInt", 4, "UInt", 0x04, "UInt *", 0)
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_2, "UInt", 4, "UInt", 0x04, "UInt *", 0)
 		r2.write(b_camrange_1, CameraRange, "UFloat")
 		r2.write(b_camrange_2, 1000, "UFloat")
-		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_fov, "UInt", 4, "UInt", 0x02, "UInt *", 0)	
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_1, "UInt", 4, "UInt", 0x02, "UInt *", 0)	
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_2, "UInt", 4, "UInt", 0x02, "UInt *", 0)
 	} else {
-		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_fov, "UInt", 4, "UInt", 0x04, "UInt *", 0)
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_1, "UInt", 4, "UInt", 0x04, "UInt *", 0)
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_2, "UInt", 4, "UInt", 0x04, "UInt *", 0)
 		r2.write(b_camrange_1, 200, "UFloat")
 		r2.write(b_camrange_2, CameraRange, "UFloat")
-		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_fov, "UInt", 4, "UInt", 0x02, "UInt *", 0)
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_1, "UInt", 4, "UInt", 0x02, "UInt *", 0)	
+		DllCall("VirtualProtectEx", "UInt", hProcessCopy, "UInt", b_camrange_2, "UInt", 4, "UInt", 0x02, "UInt *", 0)
 	}
 }
 return
@@ -682,6 +686,7 @@ SendClicker_1:
 		s := Click1[A_Index,2]
 		Sleep %s%
 		SendInput {%param%}
+		
 	}
 }
 return
@@ -810,6 +815,7 @@ ScriptTop:
 		WinSet, AlwaysOnTop, Off, A
 	}
 }
+return
 
 Gmark:
 {
@@ -1002,8 +1008,10 @@ Agro:
 return
 
 Freeze:
+{
 	GuiControlGet, CheckBox_Freeze
 	CheckBox_Freeze ? ScriptManage.Run(8) : ScriptManage.Terminate(8)
+}
 return
 
 
